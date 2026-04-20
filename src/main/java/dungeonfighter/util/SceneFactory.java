@@ -1,7 +1,11 @@
 package dungeonfighter.util;
 
 import dungeonfighter.enums.SceneType;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -27,8 +31,25 @@ public class SceneFactory {
     }
 
     private static Scene buildLoginScene(Stage stage) {
+
+        Label titleLabel = new Label("Welcome to the Dungeons Fighter");
+        titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-alignment: center;");
+
+        Button loginButton = new Button("LOGIN");
+
+        loginButton.setOnAction(e ->
+                stage.setScene(create(SceneType.MAIN, stage))
+        );
+
+        VBox layout = new VBox(16, titleLabel, loginButton);
+        layout.setAlignment(Pos.CENTER);
+
+
+
+
+        Button registerButton = new Button("REGISTER");
         /* TODO */
-        return null;
+        return new Scene(layout, 800, 600);
     }
 
     private static Scene buildDashboardScene(Stage stage) {
