@@ -5,3 +5,7 @@ We will be creating a dungeon arena, a card-based game where players collect, ma
 
 ### Login Screen
 ![Login Screen](mockups/Login.png)
+
+
+### Main Menu
+![Main Menu](mockups/MainMenu.png)
