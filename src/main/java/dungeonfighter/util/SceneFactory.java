@@ -34,5 +34,6 @@ public class SceneFactory {
     private static Scene buildDashboardScene(Stage stage) {
         /* TODO */
         return null;
+
     }
 }
