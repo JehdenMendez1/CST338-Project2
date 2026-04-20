@@ -4,4 +4,4 @@ We will be creating a dungeon arena, a card-based game where players collect, ma
 ## Mockups
 
 ### Login Screen
-![Login Screen] (mockups/login.png)
+![Login Screen] (mockups/Login.png)
