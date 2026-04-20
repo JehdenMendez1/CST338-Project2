@@ -7,8 +7,8 @@
 ![Login Screen](mockups/Login.png)
 
 
-### Main Menu
-![Main Menu](mockups/MainMenu.png)
+### dungeonfighter.Main Menu
+![dungeonfighter.Main Menu](mockups/MainMenu.png)
 
 
 ### Cards
