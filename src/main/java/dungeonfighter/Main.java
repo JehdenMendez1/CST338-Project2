@@ -10,10 +10,18 @@ public class Main extends Application{
         launch(args);
     }
 
+    private DatabaseManager db;
+
     @Override
     public void start(Stage stage) {
+
         stage.setTitle("Dungeons Fighter");
         stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
         stage.show();
+    }
+
+    @Override
+    public void stop(){
+        DatabaseManager.getInstance().close();
     }
 }

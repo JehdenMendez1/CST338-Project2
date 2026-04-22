@@ -1,5 +1,6 @@
 package dungeonfighter.util;
 
+import dungeonfighter.DatabaseManager;
 import dungeonfighter.enums.SceneType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 /**
  * Explanation:
@@ -36,6 +38,8 @@ public class SceneFactory {
 
     private static Scene buildMainScene(Stage stage) {
 
+        DatabaseManager db = DatabaseManager.getInstance();
+
         Label mainSceneLabel = new Label("MAIN MENU");
         mainSceneLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-alignment: center;");
 
@@ -58,6 +62,8 @@ public class SceneFactory {
 
     private static Scene buildLoginScene(Stage stage) {
 
+        DatabaseManager db = DatabaseManager.getInstance();
+
         Label titleLabel = new Label("Welcome to the Dungeons Fighter");
         titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-alignment: center;");
         titleLabel.setAlignment(Pos.TOP_CENTER);
@@ -66,24 +72,60 @@ public class SceneFactory {
         TextField userName = new TextField();
         userName.setPromptText(USERNAME_PROMPT);
         userName.setPrefWidth(100);
-        String userNameInput = userName.getText();
+
 
 
         // Password Text Field
         TextField password = new PasswordField();
         password.setPromptText(PASSWORD_PROMPT);
         password.setPrefWidth(100);
-        String passwordInput = password.getText();
+
 
         // Login Button
         Button loginButton = new Button("LOGIN");
 
-        loginButton.setOnAction(e ->
-                stage.setScene(create(SceneType.MAIN, stage))
+        loginButton.setOnAction(e -> {
+                    String usernameInput = userName.getText().trim();
+                    String passwordInput = password.getText().trim();
+
+                    stage.setScene(create(SceneType.MAIN, stage));
+                }
         );
 
         // Register Button
         Button registerButton = new Button("REGISTER");
+
+        registerButton.setOnAction(e -> {
+                    String usernameInput = userName.getText().trim();
+                    String passwordInput = password.getText().trim();
+                    if(usernameInput.isEmpty() || passwordInput.isEmpty()) {
+                        System.out.println("Username/Passoword cannot be empty");
+                        //TODO Add a popup notification
+                        return;
+                    }
+                    if(usernameInput.length() < 5){
+                        System.out.println("Too Short");
+                        //TODO Add a popup notification
+                        return;
+                    }
+
+                    if(db.userExists(usernameInput)){
+                        System.out.println("Username Taken");
+                        //TODO Add a popup notification
+                        return;
+                    }
+
+                    if(passwordInput.length() < 4){
+                        System.out.println("Too short");
+                        //TODO Add a popup notification
+                        return;
+                    }
+
+                    db.registerUser(usernameInput, passwordInput);
+                    System.out.println("Success");
+                    //TODO Add a popup notification
+                }
+                );
         /* TODO */
 
 
@@ -116,6 +158,7 @@ public class SceneFactory {
     }
 
     private static Scene buildDashboardScene(Stage stage) {
+        DatabaseManager db = DatabaseManager.getInstance();
         /* TODO */
         return null;
 
