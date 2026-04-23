@@ -75,17 +75,33 @@ public class DatabaseManager {
 
     }
 
-    public boolean userExists(String userName){
+    public boolean userExists(String username){
         String sql = "SELECT 1 FROM users WHERE userName = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, userName);
+            pstmt.setString(1, username);
 
             ResultSet rs = pstmt.executeQuery();
             return rs.next(); // true if found, false if not
 
         } catch (SQLException e) {
             System.err.println("userExists check failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean passwordMatch(String username, String password){
+        String sql = "SELECT 2 FROM users WHERE username = ? AND password = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+
+        } catch (SQLException e){
+            System.err.println("Login Failed: " + e.getMessage());
             return false;
         }
     }

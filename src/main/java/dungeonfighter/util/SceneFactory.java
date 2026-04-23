@@ -1,15 +1,12 @@
 package dungeonfighter.util;
 
 import dungeonfighter.DatabaseManager;
+import dungeonfighter.controller.LoginController;
 import dungeonfighter.enums.SceneType;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,7 +27,7 @@ public class SceneFactory {
     public static Scene create (SceneType type, Stage stage){
         return switch (type) {
             case MAIN -> buildMainScene(stage);
-            case LOGIN -> buildLoginScene (stage);
+            case LOGIN -> new LoginController().buildLoginScene(stage);
             case DASHBOARD -> buildDashboardScene(stage);
 
         };
@@ -58,103 +55,6 @@ public class SceneFactory {
 
         /* TODO */
         return new Scene(layoutMainMenu, SCENE_WIDTH, SCENE_HEIGHT);
-    }
-
-    private static Scene buildLoginScene(Stage stage) {
-
-        DatabaseManager db = DatabaseManager.getInstance();
-
-        Label titleLabel = new Label("Welcome to the Dungeons Fighter");
-        titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-alignment: center;");
-        titleLabel.setAlignment(Pos.TOP_CENTER);
-
-        // Username Text Filed
-        TextField userName = new TextField();
-        userName.setPromptText(USERNAME_PROMPT);
-        userName.setPrefWidth(100);
-
-
-
-        // Password Text Field
-        TextField password = new PasswordField();
-        password.setPromptText(PASSWORD_PROMPT);
-        password.setPrefWidth(100);
-
-
-        // Login Button
-        Button loginButton = new Button("LOGIN");
-
-        loginButton.setOnAction(e -> {
-                    String usernameInput = userName.getText().trim();
-                    String passwordInput = password.getText().trim();
-
-                    stage.setScene(create(SceneType.MAIN, stage));
-                }
-        );
-
-        // Register Button
-        Button registerButton = new Button("REGISTER");
-
-        registerButton.setOnAction(e -> {
-                    String usernameInput = userName.getText().trim();
-                    String passwordInput = password.getText().trim();
-                    if(usernameInput.isEmpty() || passwordInput.isEmpty()) {
-                        System.out.println("Username/Passoword cannot be empty");
-                        //TODO Add a popup notification
-                        return;
-                    }
-                    if(usernameInput.length() < 5){
-                        System.out.println("Too Short");
-                        //TODO Add a popup notification
-                        return;
-                    }
-
-                    if(db.userExists(usernameInput)){
-                        System.out.println("Username Taken");
-                        //TODO Add a popup notification
-                        return;
-                    }
-
-                    if(passwordInput.length() < 4){
-                        System.out.println("Too short");
-                        //TODO Add a popup notification
-                        return;
-                    }
-
-                    db.registerUser(usernameInput, passwordInput);
-                    System.out.println("Success");
-                    //TODO Add a popup notification
-                }
-                );
-        /* TODO */
-
-
-        // Login Page Arrangement
-        VBox vBoxLeft = new VBox();
-
-        VBox vBoxRight = new VBox();
-        vBoxRight.setPadding(new Insets(50));
-        vBoxRight.setSpacing(20);
-        vBoxRight.getChildren().addAll( userName, password, loginButton, registerButton);
-
-        HBox layout = new HBox();
-        layout.getChildren().addAll(vBoxLeft,vBoxRight);
-
-
-        //layout.getChildren().addAll(titleLabel);
-        layout.setPadding(new Insets(50));
-        layout.setAlignment(Pos.CENTER);
-
-        VBox mainVBOX = new VBox();
-        mainVBOX.setAlignment(Pos.CENTER);
-        mainVBOX.setPadding(new Insets(20));
-        mainVBOX.getChildren().addAll(titleLabel, layout);
-
-
-
-
-
-        return new Scene(mainVBOX, SCENE_WIDTH, SCENE_HEIGHT);
     }
 
     private static Scene buildDashboardScene(Stage stage) {
