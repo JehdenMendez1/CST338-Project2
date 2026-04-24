@@ -1,6 +1,8 @@
 package dungeonfighter;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Explanation:
@@ -21,6 +23,7 @@ public class DatabaseManager {
             connection = DriverManager.getConnection(DB_URL);
             System.out.println("Database Connected");
             createTables();
+            scoreCardTables();
         } catch (SQLException e){
             System.err.println("Connection failed: " + e.getMessage());
         }
@@ -104,6 +107,61 @@ public class DatabaseManager {
             System.err.println("Login Failed: " + e.getMessage());
             return false;
         }
+    }
+
+
+    public void scoreCardTables(){
+        String sql = """
+                CREATE TABLE IF NOT EXISTS scores (
+                id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                username        TEXT    NOT NULL,
+                score       INTEGER    NOT NULL,
+                datePlayed   TEXT    DEFAULT (datetime('now'))
+                )
+                
+                """;
+
+        try (Statement stmt = connection.createStatement()){
+            stmt.execute(sql);
+        } catch (SQLException e){
+            System.err.println("Database Initialization Failed: " + e.getMessage());
+        }
+    }
+
+    public void highScoresTable(String username, int score){
+
+        String sql = "INSERT INTO score (username, score) VALUES (?, ?)";
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, username);
+            pstmt.setInt(2, score);
+            pstmt.executeUpdate();
+        } catch (SQLException e){
+            System.err.println("registerUser Failed: " + e.getMessage());
+        }
+
+    }
+
+    public List<String> getTopTenScores() {
+
+        List<String> topScores = new ArrayList<>();
+
+        String sql = "SELECT username, score FROM scores ORDER BY score DESC LIMIT 10";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                int score = rs.getInt("score");
+                topScores.add(username + "\t\t" + score);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Login Failed: " + e.getMessage());
+
+
+        }
+        return topScores;
     }
 
 }
