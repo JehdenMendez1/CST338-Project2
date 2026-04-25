@@ -34,8 +34,10 @@ public class MainMenuController {
 
         Button playMainMenu = new Button("PLAY");
         //TODO
+        playMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.BATTLE, stage)));
 
         Button buildDeckMainMenu = new Button("BUILD DECK");
+        //TODO
         buildDeckMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.DECK, stage)));
 
         Button myCardsMainMenu = new Button("MY CARDS");

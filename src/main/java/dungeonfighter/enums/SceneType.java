@@ -10,5 +10,6 @@ public enum SceneType {
     MAIN,
     LOGIN,
     DASHBOARD,
-    DECK
+    DECK,
+    BATTLE
 }
