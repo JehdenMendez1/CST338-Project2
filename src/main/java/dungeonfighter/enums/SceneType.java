@@ -9,5 +9,6 @@ package dungeonfighter.enums;
 public enum SceneType {
     MAIN,
     LOGIN,
-    DASHBOARD
+    DASHBOARD,
+    DECK
 }
