@@ -32,14 +32,17 @@ public class DeckBuildScene {
         Button cardButton7 = new Button("Card");
         Button cardButton8 = new Button("Card");
 
-        HBox cardRow1 = new HBox();
+        HBox cardRow1 = new HBox(8);
         cardRow1.setAlignment(Pos.CENTER);
+        cardRow1.getChildren().addAll(cardButton1, cardButton2, cardButton3, cardButton4);
 
-        HBox cardRow2 = new HBox();
+        HBox cardRow2 = new HBox(8);
         cardRow2.setAlignment(Pos.CENTER);
+        cardRow2.getChildren().addAll(cardButton5, cardButton6, cardButton7, cardButton8);
 
         VBox mainVbox = new VBox(titleLabel, cardRow1, cardRow2);
+        mainVbox.setAlignment(Pos.CENTER);
 
-        return new Scene(mainVbox, SCENE_HEIGHT, SCENE_HEIGHT);
+        return new Scene(mainVbox, SCENE_WIDTH, SCENE_HEIGHT);
     }
 }
