@@ -29,26 +29,26 @@ public class MainMenuController {
     private final DatabaseManager db = DatabaseManager.getInstance();
 
     public Scene buildMainScene(Stage stage) {
-
-
-
         Label mainSceneLabel = new Label("MAIN MENU");
         mainSceneLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: white");
 
         Button playMainMenu = new Button("PLAY");
         //TODO
+
         Button buildDeckMainMenu = new Button("BUILD DECK");
-        //TODO
+        buildDeckMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.DECK, stage)));
+
         Button myCardsMainMenu = new Button("MY CARDS");
         //TODO
+
         Button scoresMainMenu = new Button("SCORES");
         //TODO
+
         Button logoutMainMenu = new Button("LOGOUT");
 
         logoutMainMenu.setOnAction(e->
                stage.setScene(SceneFactory.create(SceneType.LOGIN, stage)));
         //TODO
-
 
         HBox mainMenuTitle = new HBox(mainSceneLabel);
         mainMenuTitle.setAlignment(Pos.TOP_CENTER);
@@ -71,8 +71,6 @@ public class MainMenuController {
         highScore.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;" +
         " -fx-alignment: center; -fx-text-fill: white");
 
-
-
         for(String scoreList : db.getTopTenScores()){
             Label scoreString = new Label(scoreList);
             scoreString.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;" +
@@ -84,19 +82,10 @@ public class MainMenuController {
         score.setAlignment(Pos.TOP_RIGHT);
         score.getChildren().add(highScore);
 
-
-
         HBox secondContainer = new HBox();
         secondContainer.setSpacing(200);
         secondContainer.setAlignment(Pos.CENTER);
         secondContainer.getChildren().addAll(vBoxLeft, vBoxRight);
-
-
-
-
-
-
-
 
         // Main Container
         VBox mainVBox = new VBox();
