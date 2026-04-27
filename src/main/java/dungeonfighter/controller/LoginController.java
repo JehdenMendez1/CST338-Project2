@@ -25,8 +25,8 @@ import java.util.Objects;
  * @since 4/22/26
  */
 public class LoginController {
-    private static final int SCENE_WIDTH = 1200;
-    private static final int SCENE_HEIGHT = 1000;
+    private static final int SCENE_WIDTH = 700;
+    private static final int SCENE_HEIGHT = 700;
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
 

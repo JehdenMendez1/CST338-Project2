@@ -1,5 +1,7 @@
 package dungeonfighter.controller;
 
+import dungeonfighter.enums.SceneType;
+import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,8 +17,8 @@ import javafx.stage.Stage;
  */
 
 public class BattleController {
-    private static final int SCENE_WIDTH = 1200;
-    private static final int SCENE_HEIGHT = 1000;
+    private static final int SCENE_WIDTH = 700;
+    private static final int SCENE_HEIGHT = 700;
 
     public Scene buildBattleScene(Stage stage) {
 
@@ -26,6 +28,9 @@ public class BattleController {
 
         Button endBattle = new Button("End");
         endBattle.setAlignment(Pos.BOTTOM_RIGHT);
+
+       endBattle.setOnAction(e->
+                stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
 
         ProgressBar opponentHealth = new ProgressBar(1.0);
         Button button1 = new Button("Current Card");
@@ -51,7 +56,7 @@ public class BattleController {
 
         VBox mainVbox = new VBox();
         mainVbox.getChildren().addAll(titleLabel, opponent, player, endBattle);
-        mainVbox.setAlignment(Pos.CENTER);
+        mainVbox.setAlignment(Pos.TOP_CENTER);
 
         return new Scene(mainVbox, SCENE_WIDTH, SCENE_HEIGHT);
     }

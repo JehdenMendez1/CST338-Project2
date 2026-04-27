@@ -1,5 +1,7 @@
 package dungeonfighter.controller;
 
+import dungeonfighter.enums.SceneType;
+import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,35 +16,54 @@ import javafx.stage.Stage;
  */
 
 public class DeckBuildController {
-    private static final int SCENE_WIDTH = 1200;
-    private static final int SCENE_HEIGHT = 1000;
+    private static final int SCENE_WIDTH = 700;
+    private static final int SCENE_HEIGHT = 700;
 
     public Scene buildDeckBuildScene(Stage stage) {
 
         Label titleLabel = new Label("Build Your Deck");
-        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: black ");
+        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: black; -fx-font-family: Courier New");
         titleLabel.setAlignment(Pos.TOP_CENTER);
 
-        Button cardButton1 = new Button("Card");
-        Button cardButton2 = new Button("Card");
-        Button cardButton3 = new Button("Card");
-        Button cardButton4 = new Button("Card");
-        Button cardButton5 = new Button("Card");
-        Button cardButton6 = new Button("Card");
-        Button cardButton7 = new Button("Card");
-        Button cardButton8 = new Button("Card");
+        Button card1 = new Button("Card");
+        Button card2 = new Button("Card");
+        Button card3 = new Button("Card");
+        Button card4 = new Button("Card");
+        Button card5 = new Button("Card");
+        Button card6 = new Button("Card");
+        Button card7 = new Button("Card");
+        Button card8 = new Button("Card");
 
-        HBox cardRow1 = new HBox(8);
+        card1.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card2.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card3.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card4.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card5.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card6.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card7.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+        card8.setStyle("-fx-pref-height: 160; -fx-pref-width: 110");
+
+        Button toPrevious = new Button("Return To Main Menu");
+        toPrevious.setAlignment(Pos.BOTTOM_RIGHT);
+        toPrevious.setStyle("-fx-pref-height: 35; -fx-pref-width: 180; -fx-font-family: Courier New");
+
+        toPrevious.setOnAction(e->
+                stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
+
+        HBox cardRow1 = new HBox(50);
         cardRow1.setAlignment(Pos.CENTER);
-        cardRow1.getChildren().addAll(cardButton1, cardButton2, cardButton3, cardButton4);
+        cardRow1.getChildren().addAll(card1, card2, card3, card4);
 
-        HBox cardRow2 = new HBox(8);
+        HBox cardRow2 = new HBox(50);
         cardRow2.setAlignment(Pos.CENTER);
-        cardRow2.getChildren().addAll(cardButton5, cardButton6, cardButton7, cardButton8);
+        cardRow2.getChildren().addAll(card5, card6, card7, card8);
 
-        VBox mainVbox = new VBox();
-        mainVbox.getChildren().addAll(titleLabel, cardRow1, cardRow2);
-        mainVbox.setAlignment(Pos.CENTER);
+        HBox toPrevAlign = new HBox();
+        toPrevAlign.getChildren().addAll(toPrevious);
+
+        VBox mainVbox = new VBox(45);
+        mainVbox.setAlignment(Pos.TOP_CENTER);
+        mainVbox.getChildren().addAll(titleLabel, cardRow1, cardRow2, toPrevious);
 
         return new Scene(mainVbox, SCENE_WIDTH, SCENE_HEIGHT);
     }
