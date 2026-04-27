@@ -5,7 +5,10 @@ import java.util.HashSet;
 
 /**
  * Utility class for validating player decks.
- * Makes sure decks meet game rules before being used in gameplay.
+ * Ensures decks follow game rules before gameplay.
+ *
+ * @author Christian Meza
+ * @since 4/25/26
  */
 public class DeckValidator {
 
