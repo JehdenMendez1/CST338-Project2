@@ -93,6 +93,21 @@ public class DatabaseManager {
         }
     }
 
+    public boolean userRemove(String username){
+        String sql = "DELETE FROM users WHERE userName = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+
+            int rowsDeleted = pstmt.executeUpdate();
+            return rowsDeleted > 0; // true if user deleted
+
+        } catch (SQLException e) {
+            System.err.println("userRemove failed: " + e.getMessage());
+            return false;
+        }
+    }
+
     public boolean passwordMatch(String username, String password){
         String sql = "SELECT 2 FROM users WHERE username = ? AND password = ?";
 
