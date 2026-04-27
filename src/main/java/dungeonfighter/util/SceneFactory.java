@@ -7,6 +7,7 @@ import dungeonfighter.controller.LoginController;
 import dungeonfighter.controller.MainMenuController;
 import dungeonfighter.enums.SceneType;
 import javafx.scene.Scene;
+
 import javafx.stage.Stage;
 
 
@@ -27,6 +28,7 @@ public class SceneFactory {
             case BATTLE -> new BattleController().buildBattleScene(stage);
         };
     }
+
 
     private static Scene buildDashboardScene(Stage stage) {
         DatabaseManager db = DatabaseManager.getInstance();
