@@ -21,8 +21,8 @@ import java.util.Objects;
  * @since 4/22/26
  */
 public class MainMenuController {
-    private static final int SCENE_WIDTH = 1200;
-    private static final int SCENE_HEIGHT = 1000;
+    private static final int SCENE_WIDTH = 700;
+    private static final int SCENE_HEIGHT = 700;
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
 
@@ -72,6 +72,7 @@ public class MainMenuController {
         Label highScore = new Label("High Score");
         highScore.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;" +
         " -fx-alignment: center; -fx-text-fill: white");
+        vBoxRight.getChildren().addAll(highScore);
 
         for(String scoreList : db.getTopTenScores()){
             Label scoreString = new Label(scoreList);
@@ -80,9 +81,9 @@ public class MainMenuController {
             vBoxRight.getChildren().addAll(scoreString);
         }
 
-        HBox score = new HBox();
-        score.setAlignment(Pos.TOP_RIGHT);
-        score.getChildren().add(highScore);
+//        HBox score = new HBox();
+//        score.setAlignment(Pos.CENTER);
+//        score.getChildren().add(highScore);
 
         HBox secondContainer = new HBox();
         secondContainer.setSpacing(200);
@@ -104,7 +105,8 @@ public class MainMenuController {
                 "-fx-background-size: cover;" +
                 "-fx-background-position: center;");
 
-        mainVBox.getChildren().addAll(mainMenuTitle, score, secondContainer);
+//        mainVBox.getChildren().addAll(mainMenuTitle, score, secondContainer);
+        mainVBox.getChildren().addAll(mainMenuTitle, secondContainer);
         VBox.setMargin(mainMenuTitle, new Insets(80, 0, 0, 0));
 
         /* TODO */

@@ -23,12 +23,10 @@ public class SceneFactory {
         return switch (type) {
             case MAIN -> new MainMenuController().buildMainScene(stage);
             case LOGIN -> new LoginController().buildLoginScene(stage);
-            case DASHBOARD -> buildDashboardScene(stage);
             case DECK -> new DeckBuildController().buildDeckBuildScene(stage);
             case BATTLE -> new BattleController().buildBattleScene(stage);
         };
     }
-
 
     private static Scene buildDashboardScene(Stage stage) {
         DatabaseManager db = DatabaseManager.getInstance();
