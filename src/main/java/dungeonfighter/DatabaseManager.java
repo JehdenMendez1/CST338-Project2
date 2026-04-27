@@ -78,6 +78,27 @@ public class DatabaseManager {
 
     }
 
+    public void updateUserPassword(String username, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE username = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("updateUserPassword failed: " + e.getMessage());
+        }
+    }
+
+    public void deleteUser(String username) {
+        String sql = "DELETE FROM users WHERE username = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("deleteUser failed: " + e.getMessage());
+        }
+    }
+
     public boolean userExists(String username){
         String sql = "SELECT 1 FROM users WHERE userName = ?";
 
@@ -154,6 +175,27 @@ public class DatabaseManager {
             System.err.println("registerUser Failed: " + e.getMessage());
         }
 
+    }
+
+    public void updateScore(int scoreId, int updatedScore) {
+        String sql = "UPDATE scores SET score = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, updatedScore);
+            pstmt.setInt(2, scoreId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("updateScore failed: " + e.getMessage());
+        }
+    }
+
+    public void deleteScore(int scoreId) {
+        String sql = "DELETE FROM scores WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, scoreId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("deleteScore failed: " + e.getMessage());
+        }
     }
 
     public List<String> getTopTenScores() {
