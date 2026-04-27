@@ -52,4 +52,19 @@ public class CardTest {
         assertEquals(50, card.getHealth());
         assertEquals(1.0, card.getHealthProgress());
     }
+
+    @Test
+    void healForZero() {
+        Card card = new Card("Knight", 50, "Slash", "Deals damage", "knight.png");
+        card.takeDamage(10);
+        card.heal(0);
+        assertEquals(40, card.getHealth());
+    }
+
+    @Test
+    void healStaysBelowHealthMax() {
+        Card card = new Card("Knight", 50, "Slash", "Deals damage", "knight.png");
+        card.heal(100);
+        assertEquals(50, card.getHealth());
+    }
 }
