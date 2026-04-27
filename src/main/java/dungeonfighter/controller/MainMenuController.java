@@ -1,12 +1,18 @@
 package dungeonfighter.controller;
 
 import dungeonfighter.DatabaseManager;
+import dungeonfighter.enums.SceneType;
+import dungeonfighter.util.SceneFactory;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 /**
  * Explanation:
@@ -17,35 +23,92 @@ import javafx.stage.Stage;
 public class MainMenuController {
     private static final int SCENE_WIDTH = 1200;
     private static final int SCENE_HEIGHT = 1000;
+    private static final String USERNAME_PROMPT = "USERNAME";
+    private static final String PASSWORD_PROMPT = "PASSWORD";
 
     private final DatabaseManager db = DatabaseManager.getInstance();
 
     public Scene buildMainScene(Stage stage) {
-
         Label mainSceneLabel = new Label("MAIN MENU");
-        mainSceneLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-alignment: center;");
+        mainSceneLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: white");
 
         Button playMainMenu = new Button("PLAY");
+        //TODO
+        playMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.BATTLE, stage)));
+
         Button buildDeckMainMenu = new Button("BUILD DECK");
+        //TODO
+        buildDeckMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.DECK, stage)));
+
         Button myCardsMainMenu = new Button("MY CARDS");
+        //TODO
+
         Button scoresMainMenu = new Button("SCORES");
+        //TODO
+
         Button logoutMainMenu = new Button("LOGOUT");
 
-        VBox layoutMainMenu = new VBox();
-        layoutMainMenu.setSpacing(16);
-        layoutMainMenu.getChildren().addAll(mainSceneLabel, playMainMenu,
-                buildDeckMainMenu, myCardsMainMenu, scoresMainMenu, logoutMainMenu);
+        logoutMainMenu.setOnAction(e->
+               stage.setScene(SceneFactory.create(SceneType.LOGIN, stage)));
+        //TODO
 
-        layoutMainMenu.setAlignment(Pos.CENTER_LEFT);
+        HBox mainMenuTitle = new HBox(mainSceneLabel);
+        mainMenuTitle.setAlignment(Pos.TOP_CENTER);
+
+        VBox vBoxLeft = new VBox();
+        vBoxLeft.getChildren().addAll(playMainMenu,
+                buildDeckMainMenu,
+                myCardsMainMenu,
+                scoresMainMenu,
+                logoutMainMenu);
+
+        vBoxLeft.setSpacing(30);
+        VBox.setMargin(vBoxLeft, new Insets(10, 0, 0,0));
+        HBox.setMargin(vBoxLeft, new Insets(10, 0,0, 0));
+        vBoxLeft.setAlignment(Pos.CENTER_LEFT);
+
+        VBox vBoxRight = new VBox();
+        vBoxRight.setAlignment(Pos.TOP_CENTER);
+        Label highScore = new Label("High Score");
+        highScore.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;" +
+        " -fx-alignment: center; -fx-text-fill: white");
+
+        for(String scoreList : db.getTopTenScores()){
+            Label scoreString = new Label(scoreList);
+            scoreString.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;" +
+                    " -fx-alignment: center; -fx-text-fill: white");
+            vBoxRight.getChildren().addAll(scoreString);
+        }
+
+        HBox score = new HBox();
+        score.setAlignment(Pos.TOP_RIGHT);
+        score.getChildren().add(highScore);
+
+        HBox secondContainer = new HBox();
+        secondContainer.setSpacing(200);
+        secondContainer.setAlignment(Pos.CENTER);
+        secondContainer.getChildren().addAll(vBoxLeft, vBoxRight);
+
+        // Main Container
+        VBox mainVBox = new VBox();
+        mainVBox.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(mainVBox, new Insets(100, 50, 50, 50));
+        mainVBox.setSpacing(100);
+
+        // Background image without the linter error in setStyle
+        String loginImagePath = Objects.requireNonNull
+                        (SceneFactory.class.getResource("/LoginPageBG.jpeg"))
+                .toExternalForm();
+
+        mainVBox.setStyle("-fx-background-image: url('" + loginImagePath + "');" +
+                "-fx-background-size: cover;" +
+                "-fx-background-position: center;");
+
+        mainVBox.getChildren().addAll(mainMenuTitle, score, secondContainer);
+        VBox.setMargin(mainMenuTitle, new Insets(80, 0, 0, 0));
 
         /* TODO */
-        return new Scene(layoutMainMenu, SCENE_WIDTH, SCENE_HEIGHT);
+        return new Scene(mainVBox, SCENE_WIDTH, SCENE_HEIGHT);
     }
 
-    private static Scene buildDashboardScene(Stage stage) {
-        DatabaseManager db = DatabaseManager.getInstance();
-        /* TODO */
-        return null;
-
-    }
 }
