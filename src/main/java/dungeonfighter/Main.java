@@ -18,7 +18,7 @@ public class Main extends Application{
         stage.setTitle("Dungeons Fighter");
         stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
 
-        //TODO - Change MAIN aback to LOGIN //
+        //TODO - Change LOGIN to MAIN if you want to test without login //
         stage.show();
     }
 

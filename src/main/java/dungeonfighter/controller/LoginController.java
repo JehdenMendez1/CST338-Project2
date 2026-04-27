@@ -30,6 +30,12 @@ public class LoginController {
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
 
+    private static final String EMPTY_INPUT = "EMPTY INPUT";
+    private static final String USERNAME_SHORT = "USERNAME SHORT";
+    private static final String USERNAME_TAKEN = "USERNAME TAKEN";
+    private static final String PASSWORD_SHORT = "PASSWORD SHORT";
+    private static final String SUCCESS = "SUCCESS";
+
     private final DatabaseManager db = DatabaseManager.getInstance();
 
     public Scene buildLoginScene(Stage stage) {
@@ -69,8 +75,10 @@ public class LoginController {
         // Register Button
         Button registerButton = new Button("REGISTER");
 
-        registerButton.setOnAction(e -> loginController.handleRegister(
-                        userName.getText().trim(), password.getText().trim()
+        registerButton.setOnAction(e ->
+                loginController.handleRegister(
+                        userName.getText().trim(),
+                        password.getText().trim()
                 )
         );
 
@@ -90,7 +98,7 @@ public class LoginController {
         vBoxLogin.setPadding(new Insets(10));
         vBoxLogin.setSpacing(20);
         vBoxLogin.setAlignment(Pos.BOTTOM_CENTER);
-        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton, gifView);
+        vBoxLogin.getChildren().addAll(userName, password, loginButton, registerButton, gifView);
 
         HBox gameTitle = new HBox();
         gameTitle.setAlignment(Pos.TOP_CENTER);
@@ -109,61 +117,65 @@ public class LoginController {
         mainVBOX.getChildren().addAll(gameTitle, vBoxLogin);
         mainVBOX.setAlignment(Pos.TOP_CENTER);
         mainVBOX.setPadding(new Insets(20));
-        VBox.setMargin(gameTitle, new Insets( 100, 0, 0, 0));
+        VBox.setMargin(gameTitle, new Insets(100, 0, 0, 0));
 
 
         return new Scene(mainVBOX, SCENE_WIDTH, SCENE_HEIGHT);
     }
-    public void handleRegister(String userName, String password){
 
-        if(userName.isEmpty() || password.isEmpty()) {
-            System.out.println("Username/Passoword cannot be empty");
+    public void handleRegister(String userName, String password) {
+
+        if (userName.isEmpty() || password.isEmpty()) {
+            System.out.println(EMPTY_INPUT);
             //TODO Add a popup notification
             return;
         }
-        if(userName.length() < 5){
-            System.out.println("Too Short");
-            //TODO Add a popup notification
-            return;
-        }
-
-        if(db.userExists(userName)){
-            System.out.println("Username Taken");
+        if (userName.length() < 5) {
+            System.out.println(USERNAME_SHORT);
             //TODO Add a popup notification
             return;
         }
 
-        if(password.length() < 4){
-            System.out.println("Too short");
+        if (db.userExists(userName)) {
+            System.out.println(USERNAME_TAKEN);
+            //TODO Add a popup notification
+            return;
+        }
+
+        if (password.length() < 4) {
+            System.out.println(PASSWORD_SHORT);
             //TODO Add a popup notification
             return;
         }
 
         db.registerUser(userName, password);
-        System.out.println("Success");
+        System.out.println(SUCCESS);
         //TODO Add a popup notification
     }
 
-    public void handleLogin(String userName, String password, Stage stage){
+    public boolean handleLogin(String userName, String password, Stage stage) {
 
-        if(userName.isEmpty() || password.isEmpty()) {
+        if (userName.isEmpty() || password.isEmpty()) {
             System.out.println("Username/Passoword cannot be empty");
             //TODO Add a popup notification
-            return;
+            return false;
         }
 
-        if(!db.userExists(userName)){
+        if (!db.userExists(userName)) {
             System.out.println("Wrong Username / Register for new user");
-            return;
+            return false;
             //TODO Add a popup notification
         }
 
-        if(db.passwordMatch(userName, password)){
-                stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
-            }
+        if (db.passwordMatch(userName, password)) {
+            stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
+            return true;
+            //TODO Add a popup notification
         }
-
-        //TODO Add a popup notification
+        return false;
     }
+
+}
+
 
 
