@@ -2,9 +2,15 @@ package dungeonfighter.util;
 
 import org.junit.jupiter.api.Test;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for DeckValidator.
+ * Verifies deck validation rules such as size limits and duplicate detection.
+ *
+ * @author Christian Meza
+ * @since 4/25/26
+ */
 public class DeckValidatorTest {
 
     @Test
