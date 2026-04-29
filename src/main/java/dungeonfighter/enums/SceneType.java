@@ -7,8 +7,8 @@ package dungeonfighter.enums;
  * @since 4/20/26
  */
 public enum SceneType {
-    MAIN,
     LOGIN,
+    MAIN,
     DECK,
     BATTLE
 }
