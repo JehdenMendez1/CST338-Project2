@@ -1,5 +1,6 @@
 package dungeonfighter.controller;
 
+import dungeonfighter.enums.ArenaType;
 import dungeonfighter.enums.SceneType;
 import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Pos;
@@ -17,19 +18,22 @@ import javafx.stage.Stage;
  */
 
 public class BattleController {
-    private static final int SCENE_WIDTH = 700;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 800;
 
-    public Scene buildBattleScene(Stage stage) {
 
-        Label titleLabel = new Label("Battle - *Current* Dungeon");
-        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: black ");
+    public Scene buildBattleScene(Stage stage, ArenaType arenaType) {
+
+
+        Label titleLabel = new Label("Battle - " + arenaType.getDungeonName());
+        titleLabel.setStyle(arenaType.getFontColor());
+        //titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: black ");
         titleLabel.setAlignment(Pos.TOP_CENTER);
 
         Button endBattle = new Button("End");
         endBattle.setAlignment(Pos.BOTTOM_RIGHT);
 
-       endBattle.setOnAction(e->
+        endBattle.setOnAction(e ->
                 stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
 
         ProgressBar opponentHealth = new ProgressBar(1.0);
@@ -58,6 +62,9 @@ public class BattleController {
         mainVbox.getChildren().addAll(titleLabel, opponent, player, endBattle);
         mainVbox.setAlignment(Pos.TOP_CENTER);
 
+        mainVbox.setStyle("-fx-background-image: url('" + arenaType.getImageBGPath() + "');" +
+                "-fx-background-size: cover;" +
+                "-fx-background-position: center;");
         return new Scene(mainVbox, SCENE_WIDTH, SCENE_HEIGHT);
     }
 }

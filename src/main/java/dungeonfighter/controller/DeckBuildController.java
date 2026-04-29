@@ -16,8 +16,8 @@ import javafx.stage.Stage;
  */
 
 public class DeckBuildController {
-    private static final int SCENE_WIDTH = 700;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 800;
 
     public Scene buildDeckBuildScene(Stage stage) {
 
