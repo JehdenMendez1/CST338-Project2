@@ -1,6 +1,7 @@
 package dungeonfighter.controller;
 
 import dungeonfighter.DatabaseManager;
+import dungeonfighter.enums.ArenaType;
 import dungeonfighter.enums.SceneType;
 import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Insets;
@@ -21,10 +22,11 @@ import java.util.Objects;
  * @since 4/22/26
  */
 public class MainMenuController {
-    private static final int SCENE_WIDTH = 700;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 800;
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
+    private ArenaType selectedArena = ArenaType.FIRE;
 
     private final DatabaseManager db = DatabaseManager.getInstance();
 
@@ -34,7 +36,8 @@ public class MainMenuController {
 
         Button playMainMenu = new Button("PLAY");
         //TODO
-        playMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.BATTLE, stage)));
+        playMainMenu.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.BATTLE, stage, selectedArena)));
+        //TODO enable arena type selection//
 
         Button buildDeckMainMenu = new Button("BUILD DECK");
         //TODO
@@ -48,6 +51,18 @@ public class MainMenuController {
 
         Button logoutMainMenu = new Button("LOGOUT");
 
+        Button fireArena = new Button("FIRE");
+        fireArena.setOnAction(e->
+            selectedArena = ArenaType.FIRE);
+
+        Button iceArena = new Button("ICE");
+        iceArena.setOnAction(e->
+                selectedArena = ArenaType.ICE);
+
+        Button wildernessArena = new Button("WILDERNESS");
+        wildernessArena.setOnAction(e->
+                selectedArena = ArenaType.JUNGLE);
+
         logoutMainMenu.setOnAction(e->
                stage.setScene(SceneFactory.create(SceneType.LOGIN, stage)));
         //TODO
@@ -56,7 +71,7 @@ public class MainMenuController {
         mainMenuTitle.setAlignment(Pos.TOP_CENTER);
 
         VBox vBoxLeft = new VBox();
-        vBoxLeft.getChildren().addAll(playMainMenu,
+        vBoxLeft.getChildren().addAll(fireArena, iceArena,wildernessArena ,playMainMenu,
                 buildDeckMainMenu,
                 myCardsMainMenu,
                 scoresMainMenu,
@@ -98,7 +113,7 @@ public class MainMenuController {
 
         // Background image without the linter error in setStyle
         String loginImagePath = Objects.requireNonNull
-                        (SceneFactory.class.getResource("/LoginPageBG.jpeg"))
+                        (SceneFactory.class.getResource("/LoginPageBG.png"))
                 .toExternalForm();
 
         mainVBox.setStyle("-fx-background-image: url('" + loginImagePath + "');" +

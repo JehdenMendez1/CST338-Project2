@@ -5,6 +5,7 @@ import dungeonfighter.controller.BattleController;
 import dungeonfighter.controller.DeckBuildController;
 import dungeonfighter.controller.LoginController;
 import dungeonfighter.controller.MainMenuController;
+import dungeonfighter.enums.ArenaType;
 import dungeonfighter.enums.SceneType;
 import javafx.scene.Scene;
 
@@ -24,14 +25,15 @@ public class SceneFactory {
             case MAIN -> new MainMenuController().buildMainScene(stage);
             case LOGIN -> new LoginController().buildLoginScene(stage);
             case DECK -> new DeckBuildController().buildDeckBuildScene(stage);
-            case BATTLE -> new BattleController().buildBattleScene(stage);
+            case BATTLE -> throw new IllegalArgumentException("Battle needs ArenaType");
         };
     }
 
-    private static Scene buildDashboardScene(Stage stage) {
-        DatabaseManager db = DatabaseManager.getInstance();
-        /* TODO */
-        return null;
-
+    public static Scene create (SceneType type, Stage stage, ArenaType arenaType){
+        return switch(type){
+            case BATTLE -> new BattleController().buildBattleScene(stage, arenaType);
+            default -> create(type, stage);
+        };
     }
+
 }

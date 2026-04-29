@@ -22,8 +22,8 @@ import java.util.Objects;
  * @since 4/22/26
  */
 public class LoginController {
-    private static final int SCENE_WIDTH = 700;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 800;
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
 
@@ -31,8 +31,6 @@ public class LoginController {
 
     public Scene buildLoginScene(Stage stage) {
 
-        //DatabaseManager db = DatabaseManager.getInstance();
-        LoginController loginController = new LoginController();
 
         Label titleLabel = new Label("Welcome to the Dungeons Fighter");
         titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: white ");
@@ -56,7 +54,7 @@ public class LoginController {
         Button loginButton = new Button("LOGIN");
 
         loginButton.setOnAction(e ->
-                loginController.handleLogin(
+                handleLogin(
                         userName.getText().trim(),
                         password.getText().trim(),
                         stage
@@ -66,17 +64,19 @@ public class LoginController {
         // Register Button
         Button registerButton = new Button("REGISTER");
 
-        registerButton.setOnAction(e -> loginController.handleRegister(
-                        userName.getText().trim(), password.getText().trim()
+        registerButton.setOnAction(e ->
+                handleRegister(
+                        userName.getText().trim(),
+                        password.getText().trim()
                 )
         );
 
         // GIF Animation on the login page
-        Image LoginGIF = new Image(Objects.requireNonNull(
-                SceneFactory.class.getResource(
-                        "/LoginPageGif.gif")).toExternalForm());
-        ImageView gifView = new ImageView(LoginGIF);
-        gifView.setPreserveRatio(true);
+//        Image LoginGIF = new Image(Objects.requireNonNull(
+//                SceneFactory.class.getResource(
+//                        "/LoginPageGif.gif")).toExternalForm());
+//        ImageView gifView = new ImageView(LoginGIF);
+//        gifView.setPreserveRatio(true);
 
         // Login Page Arrangement
         VBox mainVBOX = new VBox();
@@ -87,7 +87,7 @@ public class LoginController {
         vBoxLogin.setPadding(new Insets(10));
         vBoxLogin.setSpacing(20);
         vBoxLogin.setAlignment(Pos.BOTTOM_CENTER);
-        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton, gifView);
+        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton);
 
         HBox gameTitle = new HBox();
         gameTitle.setAlignment(Pos.TOP_CENTER);
@@ -95,7 +95,7 @@ public class LoginController {
 
         // Background image without the linter error in setStyle
         String loginImagePath = Objects.requireNonNull
-                        (SceneFactory.class.getResource("/LoginPageBG.jpeg"))
+                        (SceneFactory.class.getResource("/LoginPageBG.png"))
                 .toExternalForm();
 
 
