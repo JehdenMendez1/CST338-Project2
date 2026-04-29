@@ -6,10 +6,7 @@ import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -25,8 +22,8 @@ import java.util.Objects;
  * @since 4/22/26
  */
 public class LoginController {
-    private static final int SCENE_WIDTH = 700;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 800;
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
 
@@ -34,8 +31,6 @@ public class LoginController {
 
     public Scene buildLoginScene(Stage stage) {
 
-        //DatabaseManager db = DatabaseManager.getInstance();
-        LoginController loginController = new LoginController();
 
         Label titleLabel = new Label("Welcome to the Dungeons Fighter");
         titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: white ");
@@ -59,7 +54,7 @@ public class LoginController {
         Button loginButton = new Button("LOGIN");
 
         loginButton.setOnAction(e ->
-                loginController.handleLogin(
+                handleLogin(
                         userName.getText().trim(),
                         password.getText().trim(),
                         stage
@@ -69,17 +64,19 @@ public class LoginController {
         // Register Button
         Button registerButton = new Button("REGISTER");
 
-        registerButton.setOnAction(e -> loginController.handleRegister(
-                        userName.getText().trim(), password.getText().trim()
+        registerButton.setOnAction(e ->
+                handleRegister(
+                        userName.getText().trim(),
+                        password.getText().trim()
                 )
         );
 
         // GIF Animation on the login page
-        Image LoginGIF = new Image(Objects.requireNonNull(
-                SceneFactory.class.getResource(
-                        "/LoginPageGif.gif")).toExternalForm());
-        ImageView gifView = new ImageView(LoginGIF);
-        gifView.setPreserveRatio(true);
+//        Image LoginGIF = new Image(Objects.requireNonNull(
+//                SceneFactory.class.getResource(
+//                        "/LoginPageGif.gif")).toExternalForm());
+//        ImageView gifView = new ImageView(LoginGIF);
+//        gifView.setPreserveRatio(true);
 
         // Login Page Arrangement
         VBox mainVBOX = new VBox();
@@ -90,7 +87,7 @@ public class LoginController {
         vBoxLogin.setPadding(new Insets(10));
         vBoxLogin.setSpacing(20);
         vBoxLogin.setAlignment(Pos.BOTTOM_CENTER);
-        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton, gifView);
+        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton);
 
         HBox gameTitle = new HBox();
         gameTitle.setAlignment(Pos.TOP_CENTER);
@@ -98,7 +95,7 @@ public class LoginController {
 
         // Background image without the linter error in setStyle
         String loginImagePath = Objects.requireNonNull
-                        (SceneFactory.class.getResource("/LoginPageBG.jpeg"))
+                        (SceneFactory.class.getResource("/LoginPageBG.png"))
                 .toExternalForm();
 
 
@@ -118,52 +115,73 @@ public class LoginController {
 
         if(userName.isEmpty() || password.isEmpty()) {
             System.out.println("Username/Passoword cannot be empty");
-            //TODO Add a popup notification
+            Alert emptyFields = new Alert(Alert.AlertType.ERROR);
+            emptyFields.setTitle("ERROR!!!");
+            emptyFields.setContentText("Username?Password cannot be empty.");
+            emptyFields.showAndWait();
             return;
         }
         if(userName.length() < 5){
             System.out.println("Too Short");
-            //TODO Add a popup notification
+            Alert usernameShort= new Alert(Alert.AlertType.ERROR);
+            usernameShort.setTitle("ERROR!!!");
+            usernameShort.setContentText("Minimum length for username is 5 characters.");
+            usernameShort.showAndWait();
             return;
         }
 
         if(db.userExists(userName)){
             System.out.println("Username Taken");
-            //TODO Add a popup notification
+            Alert usernameTaken = new Alert(Alert.AlertType.ERROR);
+            usernameTaken.setTitle("ERROR!!!");
+            usernameTaken.setContentText("Username not available. Use a different username.");
+            usernameTaken.showAndWait();
             return;
         }
 
         if(password.length() < 4){
             System.out.println("Too short");
-            //TODO Add a popup notification
+            Alert passwordShort = new Alert(Alert.AlertType.ERROR);
+            passwordShort.setTitle("ERROR!!!");
+            passwordShort.setContentText("Minimum length for password is 4 characters.");
+            passwordShort.showAndWait();
             return;
         }
 
         db.registerUser(userName, password);
         System.out.println("Success");
-        //TODO Add a popup notification
+        Alert regSuccess= new Alert(Alert.AlertType.CONFIRMATION);
+        regSuccess.setTitle("SUCCESS!!!");
+        regSuccess.setContentText("New user created. Please login to play.");
+        regSuccess.showAndWait();
     }
 
     public void handleLogin(String userName, String password, Stage stage){
 
         if(userName.isEmpty() || password.isEmpty()) {
             System.out.println("Username/Passoword cannot be empty");
-            //TODO Add a popup notification
+            Alert emptyUsernamePassword = new Alert(Alert.AlertType.ERROR);
+            emptyUsernamePassword.setTitle("ERROR!!!");
+            emptyUsernamePassword.setContentText("Username/Passoword cannot be empty!");
+            emptyUsernamePassword.show();
             return;
         }
 
         if(!db.userExists(userName)){
             System.out.println("Wrong Username / Register for new user");
+            Alert wrongUserName = new Alert(Alert.AlertType.ERROR);
+            wrongUserName.setTitle("ERROR!!!");
+            wrongUserName.setContentText("Wrong Username / Register for new user");
+            wrongUserName.showAndWait();
             return;
-            //TODO Add a popup notification
+
         }
 
         if(db.passwordMatch(userName, password)){
-                stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
-            }
+            stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
         }
-
-        //TODO Add a popup notification
     }
+
+}
 
 
