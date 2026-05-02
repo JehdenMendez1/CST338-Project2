@@ -5,12 +5,12 @@ import dungeonfighter.enums.SceneType;
 import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 /**
  * @author jehdenmendez
@@ -33,8 +33,16 @@ public class BattleController {
         Button endBattle = new Button("End");
         endBattle.setAlignment(Pos.BOTTOM_RIGHT);
 
-        endBattle.setOnAction(e ->
-                stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
+        endBattle.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setContentText("Are you sure you want to end?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
+            }
+        });
 
         ProgressBar opponentHealth = new ProgressBar(1.0);
         Button button1 = new Button("Current Card");

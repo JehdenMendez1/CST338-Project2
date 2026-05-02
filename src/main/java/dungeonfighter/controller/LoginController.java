@@ -7,8 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -98,7 +96,6 @@ public class LoginController {
                         (SceneFactory.class.getResource("/LoginPageBG.png"))
                 .toExternalForm();
 
-
         mainVBOX.setStyle("-fx-background-image: url('" + loginImagePath + "');" +
                 "-fx-background-size: cover;" +
                 "-fx-background-position: center;");
@@ -107,7 +104,6 @@ public class LoginController {
         mainVBOX.setAlignment(Pos.TOP_CENTER);
         mainVBOX.setPadding(new Insets(20));
         VBox.setMargin(gameTitle, new Insets( 100, 0, 0, 0));
-
 
         return new Scene(mainVBOX, SCENE_WIDTH, SCENE_HEIGHT);
     }
@@ -121,6 +117,7 @@ public class LoginController {
             emptyFields.showAndWait();
             return;
         }
+
         if(userName.length() < 5){
             System.out.println("Too Short");
             Alert usernameShort= new Alert(Alert.AlertType.ERROR);
@@ -181,7 +178,6 @@ public class LoginController {
             stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
         }
     }
-
 }
 
 

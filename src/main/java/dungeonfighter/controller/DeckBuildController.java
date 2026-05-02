@@ -4,11 +4,15 @@ import dungeonfighter.enums.SceneType;
 import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 /**
  * @author jehdenmendez
@@ -47,8 +51,7 @@ public class DeckBuildController {
         toPrevious.setAlignment(Pos.BOTTOM_RIGHT);
         toPrevious.setStyle("-fx-pref-height: 35; -fx-pref-width: 180; -fx-font-family: Courier New");
 
-        toPrevious.setOnAction(e->
-                stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
+        toPrevious.setOnAction(e -> stage.setScene(SceneFactory.create(SceneType.MAIN, stage)));
 
         HBox cardRow1 = new HBox(50);
         cardRow1.setAlignment(Pos.CENTER);

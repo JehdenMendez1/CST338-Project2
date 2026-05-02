@@ -7,13 +7,16 @@ import dungeonfighter.util.SceneFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Explanation:
@@ -63,9 +66,17 @@ public class MainMenuController {
         wildernessArena.setOnAction(e->
                 selectedArena = ArenaType.JUNGLE);
 
-        logoutMainMenu.setOnAction(e->
-               stage.setScene(SceneFactory.create(SceneType.LOGIN, stage)));
-        //TODO
+        logoutMainMenu.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setContentText("Are you sure you want to end?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
+            }
+        });
+
 
         HBox mainMenuTitle = new HBox(mainSceneLabel);
         mainMenuTitle.setAlignment(Pos.TOP_CENTER);
