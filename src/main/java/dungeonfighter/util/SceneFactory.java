@@ -1,10 +1,7 @@
 package dungeonfighter.util;
 
 import dungeonfighter.DatabaseManager;
-import dungeonfighter.controller.BattleController;
-import dungeonfighter.controller.DeckBuildController;
-import dungeonfighter.controller.LoginController;
-import dungeonfighter.controller.MainMenuController;
+import dungeonfighter.controller.*;
 import dungeonfighter.enums.ArenaType;
 import dungeonfighter.enums.SceneType;
 import javafx.scene.Scene;
@@ -13,8 +10,10 @@ import javafx.stage.Stage;
 
 
 /**
- * Explanation:
- *
+ * Explanation: SceneFactory is responsible for creating
+ * JavaFX scenes.
+ * Battle scene use the arena type as a extra parameter to change between
+ * Arenas
  * @author Tharindu Amarasinghage
  * @since 4/20/26
  */
@@ -25,6 +24,7 @@ public class SceneFactory {
             case MAIN -> new MainMenuController().buildMainScene(stage);
             case LOGIN -> new LoginController().buildLoginScene(stage);
             case DECK -> new DeckBuildController().buildDeckBuildScene(stage);
+            case SCORE -> new UserScoreController().buildUserScoreScene(stage);
             case BATTLE -> throw new IllegalArgumentException("Battle needs ArenaType");
         };
     }

@@ -6,7 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -20,6 +23,12 @@ public class DeckBuildController {
     private static final int SCENE_HEIGHT = 800;
 
     public Scene buildDeckBuildScene(Stage stage) {
+
+        ImageView background = new ImageView(
+                new Image(getClass().getResourceAsStream("/MainMenuBG.jpeg"))
+        );
+        background.setFitWidth(SCENE_WIDTH);
+        background.setFitHeight(SCENE_HEIGHT);
 
         Label titleLabel = new Label("Build Your Deck");
         titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: black; -fx-font-family: Courier New");
@@ -65,6 +74,8 @@ public class DeckBuildController {
         mainVbox.setAlignment(Pos.TOP_CENTER);
         mainVbox.getChildren().addAll(titleLabel, cardRow1, cardRow2, toPrevious);
 
-        return new Scene(mainVbox, SCENE_WIDTH, SCENE_HEIGHT);
+        StackPane root = new StackPane();
+        root.getChildren().addAll(background, mainVbox);
+        return new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
     }
 }

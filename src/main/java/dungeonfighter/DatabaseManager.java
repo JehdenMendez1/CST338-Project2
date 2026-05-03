@@ -239,4 +239,26 @@ public class DatabaseManager {
         return currentUser;
     }
 
+
+    public List<Integer> getUserScores(String username){
+        List<Integer> scores = new ArrayList<>();
+
+        String sql = "SELECT score FROM scores WHERE username = ? ORDER BY score DESC";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+             pstmt.setString(1, username);
+
+             ResultSet rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    scores.add(rs.getInt("score"));
+                }
+
+
+            } catch (SQLException e) {
+            System.err.println("getUserScore Failed: " + e.getMessage());
+        }
+        return scores;
+
+    }
 }

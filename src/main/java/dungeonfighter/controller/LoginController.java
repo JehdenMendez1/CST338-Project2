@@ -14,7 +14,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 /**
- * Explanation:
+ * Explanation: Controller for the login Screen.
+ * Handles user authenticating, registration
+ * and user input validation.
+ * Grand access to the main menu upon successful validation.
  *
  * @author Tharindu Amarasinghage
  * @since 4/22/26
