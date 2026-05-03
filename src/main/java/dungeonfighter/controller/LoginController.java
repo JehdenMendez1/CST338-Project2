@@ -126,8 +126,10 @@ public class LoginController {
         }
 
         if (db.passwordMatch(userName, password)) {
+            DatabaseManager.setCurrentUser(userName);
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
             stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
+
         }
     }
 }

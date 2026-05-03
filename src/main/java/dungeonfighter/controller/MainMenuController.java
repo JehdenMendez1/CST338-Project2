@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import javafx.fxml.FXML;
-
+import javafx.scene.control.ListView;
 import java.io.IOException;
 
 /**
@@ -26,6 +26,8 @@ public class MainMenuController {
     private static final String USERNAME_PROMPT = "USERNAME";
     private static final String PASSWORD_PROMPT = "PASSWORD";
     private ArenaType selectedArena = ArenaType.FIRE;
+
+
 
     private final DatabaseManager db = DatabaseManager.getInstance();
 
@@ -42,6 +44,9 @@ public class MainMenuController {
     private Button logoutMainMenu;
 
     @FXML
+    private Button deleteUserMainMenu;
+
+    @FXML
     private Button iceArena;
 
     @FXML
@@ -54,7 +59,15 @@ public class MainMenuController {
     private Button playMainMenu;
 
     @FXML
+    private ListView<String> highScoreListName;
+
+    @FXML
+    private ListView<String> highScoreListScore;
+
+    @FXML
     public void initialize() {
+        loadHighScores();
+
         playMainMenu.setOnAction(e -> playMainMenu.getScene().getWindow().hide());
 
         buildDeckMainMenu.setOnAction(e -> {
@@ -75,6 +88,13 @@ public class MainMenuController {
             Stage stage = (Stage) playMainMenu.getScene().getWindow();
             stage.setScene(SceneFactory.create(SceneType.BATTLE, stage, selectedArena));
         });
+
+        deleteUserMainMenu.setOnAction(e -> {
+            String user = DatabaseManager.getCurrentUser();
+            db.userRemove(user);
+            Stage stage = (Stage) logoutMainMenu.getScene().getWindow();
+            stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
+        });
     }
 
     public static Scene buildMainScene(Stage stage) {
@@ -84,6 +104,17 @@ public class MainMenuController {
             return new Scene(root, 1280, 800);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load mainmenu.fxml", e);
+        }
+    }
+
+    private void loadHighScores() {
+        highScoreListScore .getItems().clear();
+        highScoreListName.getItems().clear();
+
+        for(String[] row: db.getTopTenScores()){
+            highScoreListName.getItems().add(row[0]);
+            highScoreListScore.getItems().add(row[1]);
+
         }
     }
 

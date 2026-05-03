@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -70,20 +71,30 @@
                                                   <Font name="System Bold" size="40.0" />
                                               </font>
                                           </Button>
+                                          <Button fx:id="deleteUserMainMenu" cancelButton="true" layoutX="55.0" layoutY="569.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="154.0" text="Delete Account" textOverrun="CLIP">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
                               <Label alignment="CENTER" layoutX="264.0" layoutY="276.0" text="Select Dungeon to Play" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
+
                                       </children>
                                   </AnchorPane>
                                   <AnchorPane maxWidth="589.0" minHeight="0.0" minWidth="0.0" prefHeight="678.0" prefWidth="589.0" HBox.hgrow="ALWAYS">
                            <children>
-                                          <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="202.0" layoutY="18.0" prefHeight="55.0" prefWidth="177.0" text="High Scores" textAlignment="CENTER" textFill="WHITE">
+                                          <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="264.0" layoutY="18.0" prefHeight="55.0" prefWidth="177.0" text="High Scores" textAlignment="CENTER" textFill="WHITE">
                                               <font>
                                                   <Font size="24.0" />
                                               </font>
                                           </Label>
+                               <ListView fx:id="highScoreListName" layoutX="162.0" layoutY="79.0" opacity="0.81" prefHeight="600.0" prefWidth="195.0" style="-fx-control-inner-background: transparent;                                          -fx-text-fill: white;                                          -fx-font-size: 16px;                                          -fx-font-weight: bold;                                          -fx-background-color: transparent" />
+
+                              <ListView fx:id="highScoreListScore" layoutX="402.0" layoutY="79.0" opacity="0.81" prefHeight="600.0" prefWidth="195.0" style="-fx-control-inner-background: transparent;                                         -fx-text-fill: white;                                         -fx-font-size: 16px;                                         -fx-font-weight: bold;                                         -fx-background-color: transparent" />
+
                            </children>
                                   </AnchorPane>
                      </children>
