@@ -16,7 +16,7 @@ public class Main extends Application{
     public void start(Stage stage) {
 
         stage.setTitle("Dungeons Fighter");
-        stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
+        stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
 
         //TODO - Change MAIN aback to LOGIN //
         stage.show();

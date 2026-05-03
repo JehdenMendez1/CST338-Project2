@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dungeonfighter.controller.MainMenuController">
+    <children>
+        <ImageView fitHeight="813.0" fitWidth="1457.0" preserveRatio="false">
+            <image>
+                <Image url="@../MainMenuBG.jpeg" />
+            </image>
+        </ImageView>
+        <StackPane prefHeight="800.0" prefWidth="1280.0" style="-fx-blend-mode: tranparent;" StackPane.alignment="CENTER">
+            <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                          <Label alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="78.0" prefWidth="430.0" style="-fx-alignment: CENTER;" text="Main Menu" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                              <font>
+                                  <Font name="Copperplate Bold" size="44.0" />
+                              </font>
+                          </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                                  <AnchorPane maxWidth="680.0" minHeight="600.0" minWidth="200.0" prefHeight="678.0" prefWidth="796.0">
+                                      <children>
+                                          <Button fx:id="buildDeckMainMenu" defaultButton="true" layoutX="43.0" layoutY="23.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="Build Deck">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="myCardsMainMenu" defaultButton="true" layoutX="42.0" layoutY="98.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="My Cards">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="scoresMainMenu" defaultButton="true" layoutX="43.0" layoutY="174.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="Scores">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="logoutMainMenu" cancelButton="true" layoutX="459.0" layoutY="569.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="Logout">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="iceArena" defaultButton="true" layoutX="55.0" layoutY="319.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="ICE">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="fireArena" defaultButton="true" layoutX="265.0" layoutY="321.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="FIRE">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="wildernessArena" defaultButton="true" layoutX="482.0" layoutY="321.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="154.0" text="WILDERNESS">
+                                              <font>
+                                                  <Font name="System Bold" size="18.0" />
+                                              </font>
+                                          </Button>
+                                          <Button fx:id="playMainMenu" defaultButton="true" layoutX="243.0" layoutY="418.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="215.0" text="PLAY">
+                                              <font>
+                                                  <Font name="System Bold" size="40.0" />
+                                              </font>
+                                          </Button>
+                              <Label alignment="CENTER" layoutX="264.0" layoutY="276.0" text="Select Dungeon to Play" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                                      </children>
+                                  </AnchorPane>
+                                  <AnchorPane maxWidth="589.0" minHeight="0.0" minWidth="0.0" prefHeight="678.0" prefWidth="589.0" HBox.hgrow="ALWAYS">
+                           <children>
+                                          <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="202.0" layoutY="18.0" prefHeight="55.0" prefWidth="177.0" text="High Scores" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                  <Font size="24.0" />
+                                              </font>
+                                          </Label>
+                           </children>
+                                  </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            </children>
+        </StackPane>
+    </children>
+</StackPane>

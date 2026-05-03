@@ -13,13 +13,14 @@ import java.util.List;
 public class DatabaseManager {
 
 
-    private static final String DB_URL = "jdbc:sqlite:app.db";
+    private static final String DEFAULT_DB_URL = "jdbc:sqlite:app.db";
     private static DatabaseManager instance;
 
     private Connection connection;
 
     private DatabaseManager(){
         try{
+            String DB_URL = System.getProperty("app.db.url", DEFAULT_DB_URL);
             connection = DriverManager.getConnection(DB_URL);
             System.out.println("Database Connected");
             createTables();
@@ -46,6 +47,12 @@ public class DatabaseManager {
         } catch (SQLException e){
             System.err.println("Error Closing DB: " + e.getMessage());
         }
+    }
+
+    static void resetForTesting(){
+        if(instance != null) instance.close();
+        instance = null;
+
     }
 
     public void createTables(){
@@ -100,7 +107,7 @@ public class DatabaseManager {
     }
 
     public boolean userExists(String username){
-        String sql = "SELECT 1 FROM users WHERE userName = ?";
+        String sql = "SELECT 1 FROM users WHERE username = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, username);
@@ -166,7 +173,7 @@ public class DatabaseManager {
 
     public void highScoresTable(String username, int score){
 
-        String sql = "INSERT INTO score (username, score) VALUES (?, ?)";
+        String sql = "INSERT INTO scores (username, score) VALUES (?, ?)";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, username);
             pstmt.setInt(2, score);

@@ -3,17 +3,15 @@ package dungeonfighter.controller;
 import dungeonfighter.DatabaseManager;
 import dungeonfighter.enums.SceneType;
 import dungeonfighter.util.SceneFactory;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Objects;
+import java.net.URL;
 
 /**
  * Explanation:
@@ -24,96 +22,43 @@ import java.util.Objects;
 public class LoginController {
     private static final int SCENE_WIDTH = 1280;
     private static final int SCENE_HEIGHT = 800;
-    private static final String USERNAME_PROMPT = "USERNAME";
-    private static final String PASSWORD_PROMPT = "PASSWORD";
+
+    @FXML
+    private TextField usernameTextField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private ImageView backgroundImage;
 
     private final DatabaseManager db = DatabaseManager.getInstance();
 
     public Scene buildLoginScene(Stage stage) {
+        try {
+            URL fxmlURL = getClass().getResource("/fxml/login.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlURL);
+            Parent root = loader.load();
+            Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
+            LoginController controller = loader.getController();
+            controller.backgroundImage.fitWidthProperty().bind(scene.widthProperty());
+            controller.backgroundImage.fitHeightProperty().bind(scene.heightProperty());
 
-        Label titleLabel = new Label("Welcome to the Dungeons Fighter");
-        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-fill: white ");
-        titleLabel.setAlignment(Pos.TOP_CENTER);
+            return scene;
 
-        // Username Text Filed
-        TextField userName = new TextField();
-        userName.setPromptText(USERNAME_PROMPT);
-        userName.setPrefWidth(200);
-        userName.setMaxWidth(200);
-        userName.setPrefHeight(30);
-
-        // Password Text Field
-        TextField password = new PasswordField();
-        password.setPromptText(PASSWORD_PROMPT);
-        password.setPrefWidth(200);
-        password.setMaxWidth(200);
-        password.setPrefHeight(30);
-
-        // Login Button
-        Button loginButton = new Button("LOGIN");
-
-        loginButton.setOnAction(e ->
-                handleLogin(
-                        userName.getText().trim(),
-                        password.getText().trim(),
-                        stage
-                )
-        );
-
-        // Register Button
-        Button registerButton = new Button("REGISTER");
-
-        registerButton.setOnAction(e ->
-                handleRegister(
-                        userName.getText().trim(),
-                        password.getText().trim()
-                )
-        );
-
-        // GIF Animation on the login page
-//        Image LoginGIF = new Image(Objects.requireNonNull(
-//                SceneFactory.class.getResource(
-//                        "/LoginPageGif.gif")).toExternalForm());
-//        ImageView gifView = new ImageView(LoginGIF);
-//        gifView.setPreserveRatio(true);
-
-        // Login Page Arrangement
-        VBox mainVBOX = new VBox();
-        mainVBOX.setPadding(new Insets(100));
-        mainVBOX.setSpacing(50);
-
-        VBox vBoxLogin = new VBox();
-        vBoxLogin.setPadding(new Insets(10));
-        vBoxLogin.setSpacing(20);
-        vBoxLogin.setAlignment(Pos.BOTTOM_CENTER);
-        vBoxLogin.getChildren().addAll( userName, password, loginButton, registerButton);
-
-        HBox gameTitle = new HBox();
-        gameTitle.setAlignment(Pos.TOP_CENTER);
-        gameTitle.getChildren().addAll(titleLabel);
-
-        // Background image without the linter error in setStyle
-        String loginImagePath = Objects.requireNonNull
-                        (SceneFactory.class.getResource("/LoginPageBG.png"))
-                .toExternalForm();
-
-
-        mainVBOX.setStyle("-fx-background-image: url('" + loginImagePath + "');" +
-                "-fx-background-size: cover;" +
-                "-fx-background-position: center;");
-
-        mainVBOX.getChildren().addAll(gameTitle, vBoxLogin);
-        mainVBOX.setAlignment(Pos.TOP_CENTER);
-        mainVBOX.setPadding(new Insets(20));
-        VBox.setMargin(gameTitle, new Insets( 100, 0, 0, 0));
-
-
-        return new Scene(mainVBOX, SCENE_WIDTH, SCENE_HEIGHT);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load login.fxml" + e);
+        }
     }
-    public void handleRegister(String userName, String password){
 
-        if(userName.isEmpty() || password.isEmpty()) {
+    @FXML
+    public void handleRegister() {
+
+        String userName = usernameTextField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        if (userName.isEmpty() || password.isEmpty()) {
             System.out.println("Username/Passoword cannot be empty");
             Alert emptyFields = new Alert(Alert.AlertType.ERROR);
             emptyFields.setTitle("ERROR!!!");
@@ -121,16 +66,16 @@ public class LoginController {
             emptyFields.showAndWait();
             return;
         }
-        if(userName.length() < 5){
+        if (userName.length() < 5) {
             System.out.println("Too Short");
-            Alert usernameShort= new Alert(Alert.AlertType.ERROR);
+            Alert usernameShort = new Alert(Alert.AlertType.ERROR);
             usernameShort.setTitle("ERROR!!!");
             usernameShort.setContentText("Minimum length for username is 5 characters.");
             usernameShort.showAndWait();
             return;
         }
 
-        if(db.userExists(userName)){
+        if (db.userExists(userName)) {
             System.out.println("Username Taken");
             Alert usernameTaken = new Alert(Alert.AlertType.ERROR);
             usernameTaken.setTitle("ERROR!!!");
@@ -139,7 +84,7 @@ public class LoginController {
             return;
         }
 
-        if(password.length() < 4){
+        if (password.length() < 4) {
             System.out.println("Too short");
             Alert passwordShort = new Alert(Alert.AlertType.ERROR);
             passwordShort.setTitle("ERROR!!!");
@@ -150,15 +95,19 @@ public class LoginController {
 
         db.registerUser(userName, password);
         System.out.println("Success");
-        Alert regSuccess= new Alert(Alert.AlertType.CONFIRMATION);
+        Alert regSuccess = new Alert(Alert.AlertType.CONFIRMATION);
         regSuccess.setTitle("SUCCESS!!!");
         regSuccess.setContentText("New user created. Please login to play.");
         regSuccess.showAndWait();
     }
 
-    public void handleLogin(String userName, String password, Stage stage){
+    @FXML
+    public void handleLogin() {
 
-        if(userName.isEmpty() || password.isEmpty()) {
+        String userName = usernameTextField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        if (userName.isEmpty() || password.isEmpty()) {
             System.out.println("Username/Passoword cannot be empty");
             Alert emptyUsernamePassword = new Alert(Alert.AlertType.ERROR);
             emptyUsernamePassword.setTitle("ERROR!!!");
@@ -167,21 +116,20 @@ public class LoginController {
             return;
         }
 
-        if(!db.userExists(userName)){
+        if (!db.userExists(userName)) {
             System.out.println("Wrong Username / Register for new user");
             Alert wrongUserName = new Alert(Alert.AlertType.ERROR);
             wrongUserName.setTitle("ERROR!!!");
             wrongUserName.setContentText("Wrong Username / Register for new user");
             wrongUserName.showAndWait();
             return;
-
         }
 
-        if(db.passwordMatch(userName, password)){
+        if (db.passwordMatch(userName, password)) {
+            Stage stage = (Stage) usernameTextField.getScene().getWindow();
             stage.setScene(SceneFactory.create(SceneType.MAIN, stage));
         }
     }
-
 }
 
 
