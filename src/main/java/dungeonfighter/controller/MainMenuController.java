@@ -15,7 +15,9 @@ import javafx.scene.control.ListView;
 import java.io.IOException;
 
 /**
- * Explanation:
+ * Explanation: Controller for the Main Menu.
+ * Enables the user to interact with gameplay,
+ * deleting user data, and logging out from the game.
  *
  * @author Tharindu Amarasinghage
  * @since 4/22/26
@@ -78,6 +80,11 @@ public class MainMenuController {
         logoutMainMenu.setOnAction(e -> {
             Stage stage = (Stage) logoutMainMenu.getScene().getWindow();
             stage.setScene(SceneFactory.create(SceneType.LOGIN, stage));
+        });
+
+        scoresMainMenu.setOnAction(e -> {
+            Stage stage = (Stage) scoresMainMenu.getScene().getWindow();
+            stage.setScene(SceneFactory.create(SceneType.SCORE, stage));
         });
 
         fireArena.setOnAction(e -> selectedArena = ArenaType.FIRE);
