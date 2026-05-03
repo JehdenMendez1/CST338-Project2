@@ -18,6 +18,8 @@ public class DatabaseManager {
 
     private Connection connection;
 
+    private static String currentUser;
+
     private DatabaseManager(){
         try{
             String DB_URL = System.getProperty("app.db.url", DEFAULT_DB_URL);
@@ -122,7 +124,7 @@ public class DatabaseManager {
     }
 
     public boolean userRemove(String username){
-        String sql = "DELETE FROM users WHERE userName = ?";
+        String sql = "DELETE FROM users WHERE username = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, username);
@@ -179,7 +181,7 @@ public class DatabaseManager {
             pstmt.setInt(2, score);
             pstmt.executeUpdate();
         } catch (SQLException e){
-            System.err.println("registerUser Failed: " + e.getMessage());
+            System.err.println("highScoreTable Failed: " + e.getMessage());
         }
 
     }
@@ -205,9 +207,9 @@ public class DatabaseManager {
         }
     }
 
-    public List<String> getTopTenScores() {
+    public List<String[]> getTopTenScores() {
 
-        List<String> topScores = new ArrayList<>();
+        List<String[]> topScores = new ArrayList<>();
 
         String sql = "SELECT username, score FROM scores ORDER BY score DESC LIMIT 10";
 
@@ -216,8 +218,8 @@ public class DatabaseManager {
 
             while (rs.next()) {
                 String username = rs.getString("username");
-                int score = rs.getInt("score");
-                topScores.add(username + "\t\t" + score);
+                String score = Integer.toString(rs.getInt("score"));
+                topScores.add(new String[]{username, score});
             }
 
         } catch (SQLException e) {
@@ -226,6 +228,15 @@ public class DatabaseManager {
 
         }
         return topScores;
+    }
+
+
+    public static void setCurrentUser(String user) {
+        currentUser = user;
+    }
+
+    public static String getCurrentUser() {
+        return currentUser;
     }
 
 }

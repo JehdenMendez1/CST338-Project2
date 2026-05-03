@@ -52,10 +52,10 @@ class DatabaseManagerTest {
 
         db.highScoresTable("testUser", 250);
 
-        List<String> scores = db.getTopTenScores();
+        List<String[]> scores = db.getTopTenScores();
 
         assertEquals(1, scores.size());
-        assertTrue(scores.get(0).contains("testUser"));
-        assertTrue(scores.get(0).contains("250"));
+        assertEquals("testUser", scores.get(0)[0]);
+        assertEquals("250", scores.get(0)[1]);
     }
 }
