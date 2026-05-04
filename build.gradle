@@ -32,6 +32,15 @@ dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.53.0.0'
 }
 
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.testfx:testfx-junit5:4.0.18'
+    testImplementation 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
+}
+
 test {
     useJUnitPlatform()
 }
+
